@@ -1,26 +1,36 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+@layer base {
+  @font-face {
+    font-family: "Andy Sans";
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("/fonts/AeonikPro-Roman-VF.woff2") format("woff2-variations"),
+      url("/fonts/AeonikPro-Roman-VF.woff2") format("woff2"),
+      url("/fonts/AeonikPro-Roman-VF.ttf") format("truetype-variations");
   }
-  body {
-    color: white;
-    background: black;
+  @font-face {
+    font-family: "Andy Mono";
+    src: url("/fonts/AeonikFono-Regular.woff2") format("woff2"),
+      url("/fonts/AeonikFono-Regular.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+}
+
+@layer utilities {
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+
+  .size-screen {
+    @apply w-screen h-screen;
+  }
+
+  .translate-none {
+    @apply translate-y-0;
   }
 }

@@ -1,9 +1,7 @@
 import Head from "next/head";
-import NextImage from "next/future/image";
 import Container from "/components/global/Container";
-import image from "/public/img/fpo-02.jpg";
 
-export default function Home() {
+const About = () => {
   return (
     <>
       <Head>
@@ -14,10 +12,12 @@ export default function Home() {
       <main>
         <section className="flex-center size-screen">
           <Container>
-            <h1 className="font-black text-6xl">Foo Bar</h1>
+            <h1 className="font-black text-6xl">About Me</h1>
           </Container>
         </section>
       </main>
     </>
   );
-}
+};
+
+export default About;

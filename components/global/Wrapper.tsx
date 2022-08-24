@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import { calculateSpacing } from "lib/calculateSpacing";
 
 type sizes = "none" | "xs" | "sm" | "base" | "lg" | "xl";
@@ -9,11 +8,10 @@ type Props = {
   b?: sizes;
 };
 
-const Container = ({ children, t = "base", b = "base" }: Props) => {
-  const spacingY = calculateSpacing(t, b);
-  const styles = clsx(spacingY, "px-2 sm:px-4 lg:px-8");
+const Wrapper = ({ children, t = "base", b = "base" }: Props) => {
+  const styles = calculateSpacing(t, b);
 
   return <div className={styles}>{children}</div>;
 };
 
-export default Container;
+export default Wrapper;

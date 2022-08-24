@@ -1,0 +1,7 @@
+.menuItemActive {
+  @apply translate-y-0;
+}
+
+.foo {
+  color: blue;
+}

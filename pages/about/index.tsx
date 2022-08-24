@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Container from "/components/global/Container";
+import Container from "components/global/Container";
 
 const About = () => {
   return (

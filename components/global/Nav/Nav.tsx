@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Container from "components/global/Container";
-import MenuItems from "components/global/MenuItems";
+import MenuItems from "./MenuItems";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
@@ -22,10 +22,10 @@ const Nav = () => {
 
   return (
     <nav className="absolute top-0 left-0 w-screen z-50">
-      <Container>
+      <Container t="xs">
         <div className="flex justify-between items-center w-full">
           <Link href="/">
-            <a className="relative w-10 z-10">
+            <a className="relative w-10 z-10 p-0.5">
               <AndyLogo />
             </a>
           </Link>

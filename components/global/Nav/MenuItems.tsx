@@ -1,3 +1,4 @@
+import styles from "./Nav.module.css";
 import Link from "next/link";
 import clsx from "clsx";
 import useDelayedRender from "use-delayed-render";
@@ -6,6 +7,7 @@ import type { NavProps } from "types/nav";
 
 const links = [
   { href: "/", text: "Home" },
+  { href: "/feed", text: "Feed" },
   { href: "/snippets", text: "Snippets" },
   { href: "/about", text: "About" },
 ];
@@ -36,7 +38,7 @@ const MobileMenu = ({ isMenuOpen }: NavProps) => {
 
   const linkStyle = clsx(
     "font-medium text-xl translate-y-full transition-transform duration-500 ease-in-out-cubic",
-    rendered && "translate-none"
+    rendered && styles.menuItemActive
   );
 
   if (!mounted) return null;

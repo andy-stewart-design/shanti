@@ -21,16 +21,10 @@
   }
 }
 
-@layer utilities {
-  .flex-center {
-    @apply flex justify-center items-center;
-  }
+.flex-center {
+  @apply flex justify-center items-center;
+}
 
-  .size-screen {
-    @apply w-screen h-screen;
-  }
-
-  .translate-none {
-    @apply translate-y-0;
-  }
+.size-screen {
+  @apply w-screen h-screen;
 }

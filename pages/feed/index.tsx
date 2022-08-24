@@ -1,4 +1,5 @@
 import fs from "fs";
+import { join } from "path";
 import Head from "next/head";
 import Container from "components/global/Container";
 import NextImage from "next/future/image";
@@ -73,7 +74,9 @@ const Feed = ({ images }) => {
 };
 
 export async function getStaticProps() {
-  const images = fs.readdirSync("./public/img/feed");
+  const postsDir = join(process.cwd(), "public/img/feed");
+  const images = fs.readdirSync(postsDir);
+  console.log(images);
 
   return { props: { images } };
 }

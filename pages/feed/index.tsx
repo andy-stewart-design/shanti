@@ -20,58 +20,19 @@ const Feed = ({ images }: Props) => {
       </Head>
       <main>
         <Container t="xl">
-          {images.map((img) => (
-            <p key={img}>{img}</p>
-          ))}
           <div className="grid grid-cols-fit-sm sm:grid-cols-fit xl:grid-cols-fit-lg gap-4">
-            <NextImage
-              src="/img/feed/feed-0.jpeg"
-              width="1000"
-              height="1000"
-              sizes="50vw"
-              quality="60"
-              alt="Feed image"
-            ></NextImage>
-            <NextImage
-              src="/img/feed/feed-1.jpeg"
-              width="1000"
-              height="1000"
-              sizes="50vw"
-              quality="60"
-              alt="Feed image"
-            ></NextImage>
-            <NextImage
-              src="/img/feed/feed-2.jpeg"
-              width="1000"
-              height="1000"
-              sizes="50vw"
-              quality="60"
-              alt="Feed image"
-            ></NextImage>
-            <NextImage
-              src="/img/feed/feed-3.jpeg"
-              width="1000"
-              height="1000"
-              sizes="50vw"
-              quality="60"
-              alt="Feed image"
-            ></NextImage>
-            <NextImage
-              src="/img/feed/feed-4.jpeg"
-              width="1000"
-              height="1000"
-              sizes="50vw"
-              quality="60"
-              alt="Feed image"
-            ></NextImage>
-            <NextImage
-              src="/img/feed/feed-5.jpeg"
-              width="1000"
-              height="1000"
-              sizes="50vw"
-              quality="60"
-              alt="Feed image"
-            ></NextImage>
+            {images.map((img) => (
+              <div key={img} className="bg-black">
+                <NextImage
+                  src={`/img/feed/${img}`}
+                  width="1000"
+                  height="1000"
+                  sizes="50vw"
+                  quality="60"
+                  alt="Feed image"
+                ></NextImage>
+              </div>
+            ))}
           </div>
         </Container>
       </main>

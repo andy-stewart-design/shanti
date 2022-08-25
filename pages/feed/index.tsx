@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { readdirSync } from "fs";
 import { join } from "path";
 import Head from "next/head";
@@ -40,12 +39,11 @@ const Feed = ({ images }: Props) => {
   );
 };
 
-export async function getStaticProps() {
+export const getStaticProps = async () => {
   const postsDir = join(process.cwd(), "public/img/feed");
   const images = readdirSync(postsDir);
-  console.log(typeof images);
 
   return { props: { images } };
-}
+};
 
 export default Feed;

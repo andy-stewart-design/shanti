@@ -25,48 +25,48 @@ const Feed = ({ images }: Props) => {
           <div className="grid grid-cols-fit-sm sm:grid-cols-fit xl:grid-cols-fit-lg gap-4">
             <NextImage
               src="/img/feed/feed-0.jpeg"
-              width="1920"
-              height="1080"
+              width="1000"
+              height="1000"
               sizes="50vw"
               quality="60"
               alt="Feed image"
             ></NextImage>
             <NextImage
               src="/img/feed/feed-1.jpeg"
-              width="1920"
-              height="1080"
+              width="1000"
+              height="1000"
               sizes="50vw"
               quality="60"
               alt="Feed image"
             ></NextImage>
             <NextImage
               src="/img/feed/feed-2.jpeg"
-              width="1920"
-              height="1080"
+              width="1000"
+              height="1000"
               sizes="50vw"
               quality="60"
               alt="Feed image"
             ></NextImage>
             <NextImage
               src="/img/feed/feed-3.jpeg"
-              width="1920"
-              height="1080"
+              width="1000"
+              height="1000"
               sizes="50vw"
               quality="60"
               alt="Feed image"
             ></NextImage>
             <NextImage
               src="/img/feed/feed-4.jpeg"
-              width="1920"
-              height="1080"
+              width="1000"
+              height="1000"
               sizes="50vw"
               quality="60"
               alt="Feed image"
             ></NextImage>
             <NextImage
               src="/img/feed/feed-5.jpeg"
-              width="1920"
-              height="1080"
+              width="1000"
+              height="1000"
               sizes="50vw"
               quality="60"
               alt="Feed image"
@@ -79,7 +79,7 @@ const Feed = ({ images }: Props) => {
 };
 
 export async function getStaticProps() {
-  const postsDir = join(process.cwd(), "content/feed");
+  const postsDir = join(process.cwd(), "public/img/feed");
   const images = readdirSync(postsDir);
   console.log(typeof images);
 

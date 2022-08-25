@@ -1,10 +1,10 @@
-import fs from "fs";
+import { readdirSync } from "fs";
 import { join } from "path";
 import Head from "next/head";
 import Container from "components/global/Container";
 import NextImage from "next/future/image";
 
-const Feed = () => {
+const Feed = ({ images }) => {
   return (
     <>
       <Head>
@@ -14,9 +14,9 @@ const Feed = () => {
       </Head>
       <main>
         <Container t="xl">
-          {/* {images.map((img) => (
+          {images.map((img) => (
             <p key={img}>{img}</p>
-          ))} */}
+          ))}
           <div className="grid grid-cols-fit-sm sm:grid-cols-fit xl:grid-cols-fit-lg gap-4">
             <NextImage
               src="/img/feed/feed-0.jpeg"
@@ -73,12 +73,12 @@ const Feed = () => {
   );
 };
 
-// export async function getStaticProps() {
-//   const postsDir = join(process.cwd(), "public/img/feed");
-//   const images = fs.readdirSync(postsDir);
-//   console.log(images);
+export async function getStaticProps() {
+  const postsDir = join(process.cwd(), "content/feed");
+  const images = readdirSync(postsDir);
+  console.log(images);
 
-//   return { props: { images } };
-// }
+  return { props: { images } };
+}
 
 export default Feed;

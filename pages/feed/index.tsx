@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { readdirSync } from "fs";
 import { join } from "path";
 import Head from "next/head";
@@ -19,9 +20,9 @@ const Feed = ({ images }: Props) => {
       </Head>
       <main>
         <Container t="xl">
-          {/* {images.map((img, index) => (
+          {images.map((img) => (
             <p key={img}>{img}</p>
-          ))} */}
+          ))}
           <div className="grid grid-cols-fit-sm sm:grid-cols-fit xl:grid-cols-fit-lg gap-4">
             <NextImage
               src="/img/feed/feed-0.jpeg"

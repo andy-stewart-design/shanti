@@ -14,7 +14,7 @@ export default function Home() {
         <section className="">
           <section className="w-screen h-screen">
             <Container t="base">
-              <div className="w-full h-px bg-white/20"></div>
+              <div className="w-full h-px bg-gray-900/20 dark:bg-white/20"></div>
               <Wrapper t="base" b="none">
                 <h1 className="font-medium text-3xl sm:text-5xl lg:text-6xl">
                   Andy Stewart designs future-focused visual systems — often for

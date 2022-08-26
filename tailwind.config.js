@@ -19,7 +19,7 @@ module.exports = {
       xs: ["0.75rem", "1.2"],
       sm: ["0.875rem", "1.2"],
       base: ["1rem", "1.5"],
-      lg: ["1.125rem", "1.3"],
+      lg: ["1.125rem", "1.5"],
       xl: ["1.25rem", "1.3"],
       "2xl": ["1.5rem", "1.3"],
       "3xl": ["1.875rem", "1.3"],
@@ -29,6 +29,14 @@ module.exports = {
       "7xl": ["4.5rem", "1.2"],
       "8xl": ["6rem", "1.2"],
       "9xl": ["8rem", "1.2"],
+    },
+    screens: {
+      xs: "440px",
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1240px",
+      "2xl": "1536px",
     },
     extend: {
       colors: {
@@ -46,10 +54,6 @@ module.exports = {
       },
       opacity: {
         15: ".15",
-      },
-      screens: {
-        xs: "440px",
-        xl: "1240px",
       },
       spacing: {
         18: "4.5rem",

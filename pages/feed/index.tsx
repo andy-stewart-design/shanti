@@ -75,6 +75,7 @@ const FeedCard = ({ img }: { img: ImageData }) => {
         src={`/img/feed/${img.slug}`}
         width="1000"
         height="1000"
+        loading="lazy"
         sizes="50vw"
         quality="60"
         alt={img.alt}
@@ -122,13 +123,14 @@ export const getStaticProps = async () => {
   const imageFiles = readdirSync(postsDir);
 
   const filteredImageFiles = filterByFileType(imageFiles);
+  console.log(getImageInfo(filteredImageFiles));
 
   return { props: { images: getImageInfo(filteredImageFiles) } };
 };
 
 const getImageInfo = (array: string[]) => {
   const imageData = array.map((slug) => {
-    const projectInfo = slug.replace(".jpg", "").replace(".png", "").split("_");
+    const projectInfo = slug.replace(/\..*$/, "").split("_"); //regex remves everything after .
     const metaArray = projectInfo.map((info, index) => {
       const metaTags = ["project", "client", "date"];
       let projectInfoFormatted: string;
@@ -155,6 +157,7 @@ const filterByFileType = (files: string[]) => {
     const fileType = file.toLocaleLowerCase();
     const doesMatch =
       fileType.includes("jpg".toLocaleLowerCase()) ||
+      fileType.includes("webp".toLocaleLowerCase()) ||
       fileType.includes("png".toLocaleLowerCase());
     if (doesMatch) return true;
   });

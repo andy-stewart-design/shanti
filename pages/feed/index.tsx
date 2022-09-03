@@ -33,7 +33,7 @@ const Feed = ({ images }: FeedProps) => {
           <div className="w-full h-px bg-gray-900/20 dark:bg-white/20"></div>
           <Wrapper t="lg" b="base">
             <div className="grid md:grid-cols-2 gap-4">
-              <h1 className="font-medium text-6xl leading-none tracking-wide uppercase">
+              <h1 className="font-medium text-5xl xs:text-6xl leading-none tracking-wide uppercase">
                 Design&nbsp;
                 <br className="hidden md:block" />
                 Feed
@@ -86,7 +86,7 @@ const FeedCard = ({ img }: { img: ImageData }) => {
             <span className="text-white/70">Client:</span> {img.client}
           </p>
           <p className="font-mono text-sm text-white">
-            <span className="text-white/70">Project:</span> {img.project}
+            <span className="text-white/70">Type:</span> {img.project}
           </p>
           <p className="font-mono text-sm text-white">
             <span className="text-white/70">Year:</span> {img.year}
@@ -123,7 +123,6 @@ export const getStaticProps = async () => {
   const imageFiles = readdirSync(postsDir);
 
   const filteredImageFiles = filterByFileType(imageFiles);
-  console.log(getImageInfo(filteredImageFiles));
 
   return { props: { images: getImageInfo(filteredImageFiles) } };
 };
@@ -167,6 +166,7 @@ const checkProjectType = (projectType: string) => {
   if (
     projectType === "Identity" ||
     projectType === "Illustration" ||
+    projectType === "Animation" ||
     projectType === "Icon Set"
   )
     return true;

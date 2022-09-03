@@ -44,7 +44,7 @@ const MobileMenu = ({ links }: MobileMenuProps) => {
       lastEl = focusableEls[focusableEls.length - 1];
     } else throw new Error("No focusable elements found");
     console.log(router.pathname);
-  }, [mounted]);
+  }, [mounted, router.pathname]);
 
   return (
     <div ref={navContainer} className="flex justify-end grow">

@@ -21,6 +21,15 @@
   }
 }
 
+a,
+button {
+  @apply bg-transparent outline-8 focus-visible:ring-0 focus-visible:outline-gray-800 dark:focus-visible:outline-white/80;
+}
+
+a {
+  @apply focus-visible:outline-offset-4;
+}
+
 .flex-center {
   @apply flex justify-center items-center;
 }

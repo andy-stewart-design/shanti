@@ -1,5 +1,3 @@
-// TODO: implement focus trap
-
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -36,15 +34,41 @@ const MobileMenu = ({ links }: MobileMenuProps) => {
   }, [router.pathname]);
 
   useEffect(() => {
-    if (!mounted) return;
-    const focusableEls = navContainer.current?.querySelectorAll("a, button");
-    let firstEl, lastEl;
+    if (!mounted || !navContainer.current) return;
+
+    const navEl = navContainer.current;
+    const focusableEls: NodeListOf<HTMLElement> =
+      navEl.querySelectorAll("a, button");
+    let firstFocusableEl: HTMLElement, lastFocusableEl: HTMLElement;
+
     if (focusableEls) {
-      firstEl = focusableEls[0];
-      lastEl = focusableEls[focusableEls.length - 1];
+      firstFocusableEl = focusableEls[0];
+      lastFocusableEl = focusableEls[focusableEls.length - 1];
     } else throw new Error("No focusable elements found");
-    console.log(router.pathname);
-  }, [mounted, router.pathname]);
+
+    const handleClick = (e: KeyboardEvent) => {
+      console.log(document.activeElement);
+      if (e.key !== "Tab" && e.key !== "Escape") return;
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstFocusableEl) {
+          e.preventDefault();
+          lastFocusableEl.focus();
+        }
+      } else if (e.key === "Escape") {
+        toggleMenu();
+      } else {
+        if (document.activeElement === lastFocusableEl) {
+          e.preventDefault();
+          firstFocusableEl.focus();
+        }
+      }
+    };
+
+    navEl.addEventListener("keydown", handleClick);
+
+    return () => navEl.removeEventListener("keydown", handleClick);
+  }, [mounted]);
 
   return (
     <div ref={navContainer} className="flex justify-end grow">

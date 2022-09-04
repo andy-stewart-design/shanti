@@ -3,7 +3,7 @@ import type { NavTriggerProps } from "types/nav";
 
 const NavTrigger = ({ isMenuActive, callback }: NavTriggerProps) => {
   const sharedStyles =
-    "transform scale-50 opacity-0 origin-center transition-all duration-500 ease-out-expo";
+    "transform scale-25 opacity-0 origin-center transition-all duration-700 ease-out-expo";
   const burger = clsx(sharedStyles, !isMenuActive && "scale-100 opacity-100");
   const close = clsx(sharedStyles, isMenuActive && "scale-100 opacity-100");
   return (

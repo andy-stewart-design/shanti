@@ -33,8 +33,9 @@ const Feed = ({ images }: FeedProps) => {
           <div className="w-full h-px bg-gray-900/20 dark:bg-white/20"></div>
           <Wrapper t="lg" b="base">
             <div className="grid md:grid-cols-2 gap-4">
-              <h1 className="font-medium text-5xl xs:text-6xl leading-none tracking-wide uppercase">
-                Design&nbsp;
+              <h1 className="font-medium text-6xl leading-none tracking-wide uppercase">
+                Design
+                <span className="inline-block md:hidden">&nbsp;</span>
                 <br className="hidden md:block" />
                 Feed
               </h1>

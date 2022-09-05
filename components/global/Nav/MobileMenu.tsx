@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import clsx from "clsx";
@@ -13,7 +13,7 @@ const MobileMenu = ({ links }: MobileMenuProps) => {
   const [isMenuActive, setIsMenuActive] = useState(false);
   const router = useRouter();
 
-  const toggleMenu = () => {
+  const toggleMenu = useCallback(() => {
     if (isMenuActive) {
       setIsMenuActive(false);
       document.body.style.overflow = "";
@@ -21,7 +21,7 @@ const MobileMenu = ({ links }: MobileMenuProps) => {
       setIsMenuActive(true);
       document.body.style.overflow = "hidden";
     }
-  };
+  }, [isMenuActive]);
 
   const { mounted, rendered } = useDelayedRender(isMenuActive, {
     enterDelay: 20,
@@ -68,7 +68,7 @@ const MobileMenu = ({ links }: MobileMenuProps) => {
     navEl.addEventListener("keydown", handleClick);
 
     return () => navEl.removeEventListener("keydown", handleClick);
-  }, [mounted]);
+  }, [mounted, toggleMenu]);
 
   return (
     <div ref={navContainer} className="flex justify-end grow">
@@ -91,7 +91,7 @@ const MobileMenuOverlay = ({
   links,
 }: MobileMenuOverlayProps) => {
   const containerStyle = clsx(
-    "fixed top-0 left-0 flex-center flex-col gap-y-6 w-screen h-screen bg-gray-300/90 dark:bg-gray-800/90 backdrop-blur-sm opacity-0 transition-opacity duration-500",
+    "fixed top-0 left-0 flex-center flex-col gap-y-6 w-screen h-screen bg-gray-300/90 dark:bg-gray-800/90 backdrop-blur-sm opacity-0 transition-opacity duration-500 ease-out",
     isMenuRendered && "opacity-100"
   );
 

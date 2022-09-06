@@ -2,7 +2,7 @@ import useIntersectionObserver from "lib/useIntersectionObserver";
 import { useEffect } from "react";
 
 const ScrollObserver = () => {
-  const [ref, { entry }] = useIntersectionObserver();
+  const [ref, { entry }] = useIntersectionObserver({});
 
   useEffect(() => {
     console.log(entry?.isIntersecting);

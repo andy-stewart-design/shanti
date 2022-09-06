@@ -9,10 +9,16 @@ import { useWindowSize } from "lib/useWindowSize";
 import type { NavLinks } from "types/nav";
 import useIntersectionObserver from "lib/useIntersectionObserver";
 import clsx from "clsx";
+import useResizeObserver from "lib/useResizeObserver";
+import { useRef } from "react";
 
 const Nav = () => {
   const window = useWindowSize();
-  const [scrollObserverRef, { entry }] = useIntersectionObserver();
+  const [scrollObserverRef, { entry }] = useIntersectionObserver({});
+  const FPO = useRef(null);
+
+  const [testRef, { width }] = useResizeObserver(FPO);
+
   const links: NavLinks[] = [
     { href: "/feed", text: "Feed" },
     { href: "/snippets", text: "Snippets" },
@@ -29,10 +35,10 @@ const Nav = () => {
         ref={scrollObserverRef}
         className="absolute top-0 left-0 w-screen h-24 invisible opacity-0 pointer-events-none"
       ></div>
-      <div className={bgStyles}></div>
+      <div ref={testRef} className={bgStyles}></div>
       <nav className="fixed top-0 left-0 w-screen z-50">
         <Container t="xs" b="xs">
-          <div className="flex w-full">
+          <div ref={FPO} className="flex w-full">
             <AndyLogo />
             {window.width && window.width < 769 && <MobileMenu links={links} />}
             {window.width && window.width >= 769 && (

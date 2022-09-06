@@ -15,7 +15,6 @@ export function useWindowSize(): Size {
         height: window.innerHeight,
       });
     }
-
     window.addEventListener("resize", handleResize);
     handleResize();
 

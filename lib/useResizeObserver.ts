@@ -28,7 +28,7 @@ const useResizeObserver = (
   }, []);
 
   useEffect(() => {
-    console.log(nodeRef.current);
+    // console.log(nodeRef.current);
 
     if (target.current) {
       observer.current = new ResizeObserver((entries) => {

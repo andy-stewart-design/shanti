@@ -38,6 +38,20 @@ function useIntersectionObserver(props?: Props): ReturnValue {
     rootRef.current = rootNode;
   }, []);
 
+  const observe = useCallback(() => {
+    const node = nodeRef.current;
+    if (node) {
+      const root = rootRef.current;
+      const options = { root, rootMargin, threshold };
+
+      const observer = new IntersectionObserver(([newEntry]) => {
+        setEntry(newEntry);
+      }, options);
+      observer.observe(node);
+      observerRef.current = observer;
+    }
+  }, [rootMargin, threshold]);
+
   const unobserve = useCallback(() => {
     const currentObserver = observerRef.current;
     currentObserver?.disconnect();
@@ -46,20 +60,11 @@ function useIntersectionObserver(props?: Props): ReturnValue {
 
   useEffect(() => {
     unobserve();
-    const node = nodeRef.current;
-    if (node) {
-      const root = rootRef.current;
-      const options = { root, rootMargin, threshold };
-      const observer = new IntersectionObserver(([newEntry]) => {
-        setEntry(newEntry);
-      }, options);
-      observer.observe(node);
-      observerRef.current = observer;
-    }
+    observe();
     return () => {
       unobserve();
     };
-  }, [rootMargin, threshold, unobserve]);
+  }, [observe, unobserve]);
 
   return [refCallback, { entry, rootRef: rootCallback }];
 }

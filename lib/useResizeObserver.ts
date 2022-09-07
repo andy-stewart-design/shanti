@@ -1,48 +1,33 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from "react";
+import { RefNode, RefCallback, Size } from "types/hooks";
 
-interface Props {}
+export type ReturnValue = [RefCallback, Size];
 
-export type RefNode = Element | null;
-export type RefCallback = (node: RefNode) => void;
-
-export interface ContentRect {
-  width: number;
-  height: number;
-}
-
-export type ReturnValue = [RefCallback, ContentRect];
-
-const useResizeObserver = (
-  target: RefObject<HTMLElement>,
-  callback: Function | null = null
-): ReturnValue => {
-  const [contentRect, setContentRect] = useState<ContentRect>({
-    width: 0,
-    height: 0,
-  });
-  const observer = useRef<ResizeObserver | null>(null);
-
+const useResizeObserver = (callback: Function | null = null): ReturnValue => {
+  const observerRef = useRef<ResizeObserver | null>(null);
   const nodeRef = useRef<RefNode>(null);
   const refCallback = useCallback<RefCallback>((node) => {
     nodeRef.current = node;
   }, []);
+  const [contentRect, setContentRect] = useState<Size>({
+    width: 0,
+    height: 0,
+  });
 
   useEffect(() => {
-    // console.log(nodeRef.current);
-
-    if (target.current) {
-      observer.current = new ResizeObserver((entries) => {
-        const { width, height } = entries[0].contentRect;
+    if (nodeRef.current) {
+      observerRef.current = new ResizeObserver(([entry]) => {
+        const { width, height } = entry.contentRect;
         setContentRect({ width, height });
         if (callback) callback();
       });
-      observer.current.observe(target.current);
+      observerRef.current.observe(nodeRef.current);
     }
 
     return () => {
-      if (observer.current) observer.current.disconnect();
+      if (observerRef.current) observerRef.current.disconnect();
     };
-  }, [target, callback]);
+  }, [callback]);
 
   return [refCallback, contentRect];
 };

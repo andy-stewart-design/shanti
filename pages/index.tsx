@@ -12,7 +12,7 @@ export default function Home() {
       </Head>
       <main>
         <section className="">
-          <section className="w-screen h-screen">
+          <header className="w-screen h-screen">
             <Container t="base">
               <div className="w-full h-px bg-gray-900/20 dark:bg-white/20"></div>
               <Wrapper t="base" b="none">
@@ -23,7 +23,7 @@ export default function Home() {
                 </h1>
               </Wrapper>
             </Container>
-          </section>
+          </header>
           <Container>
             <div className="grid grid-cols-fit-sm sm:grid-cols-fit xl:grid-cols-fit-lg gap-4">
               <div className="bg-gray-800 p-3">

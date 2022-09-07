@@ -105,19 +105,17 @@ const MobileMenuOverlay = ({
   return (
     <div className={containerStyle}>
       {links.map((link, index) => (
-        <Link key={link.text} href={link.href}>
-          <a className="flex overflow-hidden">
-            <span
-              className={linkStyle}
-              style={{
-                transitionDelay: isMenuRendered
-                  ? `${(index + 1) * 100}ms`
-                  : "1000ms",
-              }}
-            >
-              {link.text}
-            </span>
-          </a>
+        <Link key={link.text} href={link.href} className="flex overflow-hidden">
+          <span
+            className={linkStyle}
+            style={{
+              transitionDelay: isMenuRendered
+                ? `${(index + 1) * 100}ms`
+                : "1000ms",
+            }}
+          >
+            {link.text}
+          </span>
         </Link>
       ))}
     </div>

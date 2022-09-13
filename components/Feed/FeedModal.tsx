@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import NextImage from "next/future/image";
 import Container from "components/global/Container";
 import ArrowButton from "components/global/Buttons/ArrowButton";
@@ -21,6 +21,8 @@ const FeedModal = ({
   setActiveImage,
   toggleModal,
 }: ModalProps) => {
+  const modalContainer = useRef<HTMLDivElement>(null);
+
   const incActiveImage = () => {
     if (activeImage >= images.length - 1) setActiveImage(0);
     else setActiveImage((index: number) => (index += 1));
@@ -47,10 +49,58 @@ const FeedModal = ({
     mounted && !isModalActive && "delay-[0ms] scale-90"
   );
 
+  useEffect(() => {
+    if (!mounted || !modalContainer.current) return;
+
+    const modalEl = modalContainer.current;
+    const focusableEls: NodeListOf<HTMLElement> =
+      modalEl.querySelectorAll("button");
+    let firstFocusableEl: HTMLElement, lastFocusableEl: HTMLElement;
+
+    if (focusableEls) {
+      firstFocusableEl = focusableEls[0];
+      lastFocusableEl = focusableEls[focusableEls.length - 1];
+      lastFocusableEl.focus();
+    } else throw new Error("No focusable elements found");
+
+    const handleClick = (e: KeyboardEvent) => {
+      console.log(focusableEls);
+      if (
+        e.key !== "Tab" &&
+        e.key !== "Escape" &&
+        e.key !== "ArrowLeft" &&
+        e.key !== "ArrowRight"
+      )
+        return;
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstFocusableEl) {
+          e.preventDefault();
+          lastFocusableEl.focus();
+        }
+      } else if (e.key === "Escape") {
+        toggleModal();
+      } else if (e.key === "ArrowLeft") {
+        decActiveImage();
+      } else if (e.key === "ArrowRight") {
+        incActiveImage();
+      } else {
+        if (document.activeElement === lastFocusableEl) {
+          e.preventDefault();
+          firstFocusableEl.focus();
+        }
+      }
+    };
+
+    modalEl.addEventListener("keydown", handleClick);
+
+    return () => modalEl.removeEventListener("keydown", handleClick);
+  }, [mounted, toggleModal]);
+
   if (!mounted) return null;
 
   return (
-    <div className={containerStyle}>
+    <div ref={modalContainer} className={containerStyle}>
       <Container className="relative flex" t="xs" b="xs">
         <div className="relative flex justify-start items-start gap-x-2 grow md:absolute md:top-0 md:left-0 md:w-full md:h-screen md:justify-between md:items-center md:p-4 lg:px-8">
           <ArrowButton d="l" callback={decActiveImage}></ArrowButton>

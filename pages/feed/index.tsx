@@ -45,11 +45,10 @@ const Feed = ({ images }: FeedProps) => {
                 Feed
               </h1>
               <p className="lg:text-lg leading-relaxed max-w-2xl">
-                The active image is {activeImage}. Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Suscipit, autem molestias dolorem
-                consequatur necessitatibus dignissimos laborum illo eius alias,
-                libero commodi soluta! Aliquid tenetur vero aliquam corrupti
-                ipsum laudantium animi?
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Suscipit, autem molestias dolorem consequatur necessitatibus
+                dignissimos laborum illo eius alias, libero commodi soluta!
+                Aliquid tenetur vero aliquam corrupti ipsum laudantium animi?
               </p>
             </div>
           </Wrapper>

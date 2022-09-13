@@ -47,7 +47,6 @@ const MobileMenu = ({ links }: MobileMenuProps) => {
     } else throw new Error("No focusable elements found");
 
     const handleClick = (e: KeyboardEvent) => {
-      console.log(document.activeElement);
       if (e.key !== "Tab" && e.key !== "Escape") return;
 
       if (e.shiftKey) {

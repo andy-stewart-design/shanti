@@ -4,8 +4,8 @@ import type { NavTriggerProps } from "types/nav";
 const NavTrigger = ({ isMenuActive, callback }: NavTriggerProps) => {
   const sharedStyles =
     "transform scale-25 opacity-0 origin-center transition-all duration-700 ease-out-expo";
-  const burger = clsx(sharedStyles, !isMenuActive && "scale-100 opacity-100");
-  const close = clsx(sharedStyles, isMenuActive && "scale-100 opacity-100");
+  const burger = clsx(sharedStyles, !isMenuActive && "opacity-100 scale-[1]");
+  const close = clsx(sharedStyles, isMenuActive && "opacity-100 scale-[1]");
   return (
     <button
       aria-label="Open Nav Menu"

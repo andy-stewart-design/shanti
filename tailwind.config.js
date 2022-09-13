@@ -30,6 +30,19 @@ module.exports = {
       "8xl": ["6rem", "1.2"],
       "9xl": ["8rem", "1.2"],
     },
+    scale: {
+      0: "0",
+      25: ".25",
+      50: ".5",
+      75: ".75",
+      90: ".9",
+      95: ".95",
+      105: "1.05",
+      110: "1.1",
+      125: "1.25",
+      150: "1.5",
+      100: "1",
+    },
     screens: {
       xs: "440px",
       sm: "640px",
@@ -55,19 +68,19 @@ module.exports = {
       opacity: {
         15: ".15",
       },
-      scale: {
-        25: ".25",
-      },
       spacing: {
         18: "4.5rem",
         34: "7.5rem",
+      },
+      transitionProperty: {
+        trop: "transform, opacity",
       },
       transitionTimingFunction: {
         "in-expo": "cubic-bezier(0.95, 0.05, 0.795, 0.035)",
         "out-expo": "cubic-bezier(0.19, 1, 0.22, 1)",
         "in-out-expo": "cubic-bezier(0.87, 0, 0.13, 1)",
-        "in-cubic": "cubic-bezier(0.33, 1, 0.68, 1)",
-        "out-cubic": "cubic-bezier(0.32, 0, 0.67, 0)",
+        "in-cubic": "cubic-bezier(0.32, 0, 0.67, 0)",
+        "out-cubic": "cubic-bezier(0.33, 1, 0.68, 1)",
         "in-out-cubic": "cubic-bezier(0.65, 0, 0.35, 1)",
       },
     },

@@ -1,9 +1,13 @@
-// @ts-nocheck
-
 import Head from "next/head";
 import Container from "components/global/Container";
 import { useRef, useEffect, MouseEvent, useState } from "react";
 import clsx from "clsx";
+
+interface ioOptions {
+  root: Element | null;
+  rootMargin: string;
+  threshold: number;
+}
 
 const About = () => {
   const controlPlayback = (e: MouseEvent) => {
@@ -68,7 +72,7 @@ const About = () => {
         </section>
         <section className="flex-center size-screen">
           <Container>
-            <div ref={containerRef}>
+            <div>
               <video
                 ref={videoRef}
                 onClick={controlPlayback}
@@ -91,28 +95,28 @@ const About = () => {
   );
 };
 
-const useVideoAutoPlayback = (options) => {
+const useVideoAutoPlayback = (options: ioOptions) => {
   const containerRef = useRef(null);
-  const videoRef = useRef(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  const cb = (entries) => {
+  const cb = (entries: IntersectionObserverEntry[]) => {
     const [entry] = entries;
     if (entry.isIntersecting) {
-      videoRef.current.play();
-      videoRef.current.style.border = "4px solid blue";
+      videoRef.current!.play();
+      videoRef.current!.style.border = "4px solid blue";
     } else {
-      videoRef.current.pause();
-      videoRef.current.style.border = "4px solid red";
+      videoRef.current!.pause();
+      videoRef.current!.style.border = "4px solid red";
     }
   };
 
   useEffect(() => {
     const observer = new IntersectionObserver(cb, options);
-    if (containerRef.current) observer.observe(containerRef.current);
+    if (videoRef.current) observer.observe(videoRef.current);
     return () => {
-      if (containerRef.current) observer.unobserve(containerRef.current);
+      if (videoRef.current) observer.unobserve(videoRef.current);
     };
-  }, [containerRef, options]);
+  }, [videoRef, options]);
   return [containerRef, videoRef];
 };
 

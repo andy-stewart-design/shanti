@@ -16,7 +16,7 @@ const About = () => {
     else video.pause();
   };
 
-  const [containerRef, videoRef] = useVideoAutoPlayback({
+  const [videoRef] = useVideoAutoPlayback({
     root: null,
     rootMargin: "0px",
     threshold: 0.5,
@@ -85,7 +85,7 @@ const About = () => {
                   src="/img/Wildtype-Chopsticks-min.mp4"
                   type="video/mp4"
                 />
-                Sorry, your browser doesn't support embedded videos.
+                Sorry, your browser doesn&apos;t support embedded videos.
               </video>
             </div>
           </Container>
@@ -96,7 +96,6 @@ const About = () => {
 };
 
 const useVideoAutoPlayback = (options: ioOptions) => {
-  const containerRef = useRef(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const cb = (entries: IntersectionObserverEntry[]) => {
@@ -112,12 +111,13 @@ const useVideoAutoPlayback = (options: ioOptions) => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(cb, options);
-    if (videoRef.current) observer.observe(videoRef.current);
+    const vid = videoRef.current;
+    if (vid) observer.observe(vid);
     return () => {
-      if (videoRef.current) observer.unobserve(videoRef.current);
+      if (vid) observer.unobserve(vid);
     };
   }, [videoRef, options]);
-  return [containerRef, videoRef];
+  return [videoRef];
 };
 
 export default About;

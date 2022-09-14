@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react";
 import NextImage from "next/future/image";
 import Container from "components/global/Container";
 import ArrowButton from "components/global/Buttons/ArrowButton";
@@ -23,15 +29,15 @@ const FeedModal = ({
 }: ModalProps) => {
   const modalContainer = useRef<HTMLDivElement>(null);
 
-  const incActiveImage = () => {
+  const incActiveImage = useCallback(() => {
     if (activeImage >= images.length - 1) setActiveImage(0);
     else setActiveImage((index: number) => (index += 1));
-  };
+  }, [activeImage, images, setActiveImage]);
 
-  const decActiveImage = () => {
+  const decActiveImage = useCallback(() => {
     if (activeImage <= 0) setActiveImage(images.length - 1);
     else setActiveImage((index: number) => (index -= 1));
-  };
+  }, [activeImage, images, setActiveImage]);
 
   const { mounted, rendered } = useDelayedRender(isModalActive, {
     enterDelay: 20,
@@ -95,7 +101,7 @@ const FeedModal = ({
     modalEl.addEventListener("keydown", handleClick);
 
     return () => modalEl.removeEventListener("keydown", handleClick);
-  }, [mounted, toggleModal]);
+  }, [mounted, toggleModal, incActiveImage, decActiveImage]);
 
   if (!mounted) return null;
 

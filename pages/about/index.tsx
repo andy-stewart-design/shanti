@@ -1,10 +1,22 @@
+// @ts-nocheck
+
 import Head from "next/head";
 import Container from "components/global/Container";
-// import { MouseEventHandler, useState } from "react";
-// import useDelayedRender from "use-delayed-render";
-// import clsx from "clsx";
+import { useRef, useEffect, MouseEvent } from "react";
 
 const About = () => {
+  const controlPlayback = (e: MouseEvent) => {
+    let video = e.target as HTMLVideoElement;
+    if (video.paused) video.play();
+    else video.pause();
+  };
+
+  const [containerRef, videoRef] = useVideoAutoPlayback({
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.5,
+  });
+
   return (
     <>
       <Head>
@@ -18,58 +30,54 @@ const About = () => {
             <h1 className="font-black text-6xl">About Me</h1>
           </Container>
         </section>
+        <section className="flex-center size-screen">
+          <Container>
+            <div ref={containerRef}>
+              <video
+                ref={videoRef}
+                onClick={controlPlayback}
+                autoPlay
+                muted
+                loop
+                playsInline
+              >
+                <source
+                  src="/img/Wildtype-Chopsticks-min.mp4"
+                  type="video/mp4"
+                />
+                Sorry, your browser doesn't support embedded videos.
+              </video>
+            </div>
+          </Container>
+        </section>
       </main>
     </>
   );
 };
 
-// const TestButton = ({
-//   callback,
-// }: {
-//   callback: MouseEventHandler<HTMLButtonElement>;
-// }) => {
-//   console.log("The button was rendered");
+const useVideoAutoPlayback = (options) => {
+  const containerRef = useRef(null);
+  const videoRef = useRef(null);
 
-//   return (
-//     <button onClick={callback} className="py-2 px-3 bg-blue-600">
-//       Open Modal
-//     </button>
-//   );
-// };
+  const cb = (entries) => {
+    const [entry] = entries;
+    if (entry.isIntersecting) {
+      videoRef.current.play();
+      videoRef.current.style.border = "4px solid blue";
+    } else {
+      videoRef.current.pause();
+      videoRef.current.style.border = "4px solid red";
+    }
+  };
 
-// const TestModal = ({
-//   callback,
-//   isModalActive,
-// }: {
-//   callback: MouseEventHandler<HTMLDivElement>;
-//   isModalActive: boolean;
-// }) => {
-//   console.log("The modal was rendered");
-
-//   const { mounted, rendered } = useDelayedRender(isModalActive, {
-//     enterDelay: 500,
-//     exitDelay: 1000,
-//   });
-
-//   const testStyles = clsx(
-//     "w-10 h-10 bg-green-600",
-//     rendered && "bg-yellow-600",
-//     mounted && !isModalActive && "bg-purple-600"
-//   );
-
-//   if (!mounted) return null;
-
-//   return (
-//     <div
-//       onClick={callback}
-//       className="fixed top-0 left-0 w-screen h-screen z-50 bg-blue-800/80"
-//     >
-//       <p>{`isModalActive: ${isModalActive ? "true" : false}`}</p>
-//       <p>{`mounted: ${mounted ? "true" : false}`}</p>
-//       <p>{`rendered: ${rendered ? "true" : false}`}</p>
-//       <div className={testStyles}></div>
-//     </div>
-//   );
-// };
+  useEffect(() => {
+    const observer = new IntersectionObserver(cb, options);
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => {
+      if (containerRef.current) observer.unobserve(containerRef.current);
+    };
+  }, [containerRef, options]);
+  return [containerRef, videoRef];
+};
 
 export default About;

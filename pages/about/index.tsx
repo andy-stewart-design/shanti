@@ -2,7 +2,8 @@
 
 import Head from "next/head";
 import Container from "components/global/Container";
-import { useRef, useEffect, MouseEvent } from "react";
+import { useRef, useEffect, MouseEvent, useState } from "react";
+import clsx from "clsx";
 
 const About = () => {
   const controlPlayback = (e: MouseEvent) => {
@@ -17,6 +18,16 @@ const About = () => {
     threshold: 0.5,
   });
 
+  const btn = useRef(null);
+
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleClick = () => {
+    setIsExpanded((boo) => !boo);
+  };
+
+  const navStyles = clsx("visible", isExpanded && "invisible");
+
   return (
     <>
       <Head>
@@ -24,6 +35,31 @@ const About = () => {
         <meta name="description" content="Andy Stewart's Design Portfolio" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <nav id="mainnav" className="absolute w-screen z-50 bg-black">
+        <button
+          ref={btn}
+          onClick={handleClick}
+          className="w-10 h-10 rounded-full bg-blue-500"
+          aria-expanded={isExpanded}
+        ></button>
+        {isExpanded ? "true" : "false"}
+        <ul className={navStyles}>
+          <li>
+            <a href="/home">Home</a>
+          </li>
+          <li>
+            <a href="/about-us" aria-current="page">
+              About us
+            </a>
+          </li>
+          <li>
+            <a href="/pricing">Pricing</a>
+          </li>
+          <li>
+            <a href="/contact">Contact</a>
+          </li>
+        </ul>
+      </nav>
       <main>
         <section className="flex-center size-screen">
           <Container>

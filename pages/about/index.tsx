@@ -22,15 +22,20 @@ const About = () => {
     threshold: 0.5,
   });
 
-  const btn = useRef(null);
-
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const handleClick = () => {
-    setIsExpanded((boo) => !boo);
-  };
-
-  const navStyles = clsx("visible", isExpanded && "invisible");
+  const modalStyles = clsx(
+    "invisible fixed flex flex-col top-0 opacity-0 left-0 w-screen h-screen bg-black/80 backdrop-blur-sm z-50 pointer-events-none transition-all duration-500 delay-500 ease-out-cubic",
+    isExpanded && "visible-in opacity-100 pointer-events-auto delay-[0ms]"
+  );
+  const modalUiStyles = clsx(
+    "flex justify-end -translate-y-full transition-transform duration-500 delay-0 ease-out-cubic",
+    isExpanded && "-translate-y-0 delay-[300ms]"
+  );
+  const imgStyles = clsx(
+    "w-[75vw] h-[75vw] bg-blue-500 scale-110 opacity-0 transform transition-all duration-500 delay-0 ease-out-cubic",
+    isExpanded && "scale-to-100 opacity-100 delay-[300ms]"
+  );
 
   return (
     <>
@@ -39,35 +44,32 @@ const About = () => {
         <meta name="description" content="Andy Stewart's Design Portfolio" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <nav id="mainnav" className="absolute w-screen z-50 bg-black">
-        <button
-          ref={btn}
-          onClick={handleClick}
-          className="w-10 h-10 rounded-full bg-blue-500"
-          aria-expanded={isExpanded}
-        ></button>
-        {isExpanded ? "true" : "false"}
-        <ul className={navStyles}>
-          <li>
-            <a href="/home">Home</a>
-          </li>
-          <li>
-            <a href="/about-us" aria-current="page">
-              About us
-            </a>
-          </li>
-          <li>
-            <a href="/pricing">Pricing</a>
-          </li>
-          <li>
-            <a href="/contact">Contact</a>
-          </li>
-        </ul>
-      </nav>
+      <div className={modalStyles}>
+        <div className={modalUiStyles}>
+          <Container t="xs" b="xs">
+            <button
+              onClick={() => setIsExpanded(false)}
+              className="w-10 h-10 rounded-full bg-blue-500"
+              aria-expanded={isExpanded}
+            ></button>
+          </Container>
+        </div>
+        <div className="flex-center grow">
+          <div className={imgStyles}></div>
+        </div>
+      </div>
       <main>
         <section className="flex-center size-screen">
-          <Container>
+          <Container className="flex flex-col items-center">
             <h1 className="font-black text-6xl">About Me</h1>
+            <button
+              onClick={() => setIsExpanded(true)}
+              className="rounded-full bg-blue-500 p-6 py-3"
+              aria-expanded={isExpanded}
+            >
+              {" "}
+              Open Modal
+            </button>
           </Container>
         </section>
         <section className="flex-center size-screen">

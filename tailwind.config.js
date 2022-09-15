@@ -72,6 +72,9 @@ module.exports = {
         18: "4.5rem",
         34: "7.5rem",
       },
+      transitionDelay: {
+        0: "0ms",
+      },
       transitionProperty: {
         trop: "transform, opacity",
       },

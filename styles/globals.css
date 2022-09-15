@@ -21,6 +21,28 @@
   }
 }
 
+@layer utilities {
+  .delay-none {
+    @apply delay-0;
+  }
+
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+
+  .scale-to-100 {
+    @apply scale-100;
+  }
+
+  .size-screen {
+    @apply w-screen h-screen;
+  }
+
+  .visible-in {
+    @apply visible;
+  }
+}
+
 a,
 button {
   @apply bg-transparent outline-8 focus-visible:ring-0 focus-visible:outline-gray-800 dark:focus-visible:outline-white/80;
@@ -28,12 +50,4 @@ button {
 
 a {
   @apply focus-visible:outline-offset-4;
-}
-
-.flex-center {
-  @apply flex justify-center items-center;
-}
-
-.size-screen {
-  @apply w-screen h-screen;
 }

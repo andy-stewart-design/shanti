@@ -26,6 +26,21 @@ const Feed = ({ images }: FeedProps) => {
     }
   }, [isModalActive]);
 
+  const updateActiveImage = (index: number) => {
+    setActiveImage(index);
+    toggleModal();
+  };
+
+  const incActiveImage = useCallback(() => {
+    if (activeImage >= images.length - 1) setActiveImage(0);
+    else setActiveImage((index: number) => (index += 1));
+  }, [activeImage, images, setActiveImage]);
+
+  const decActiveImage = useCallback(() => {
+    if (activeImage <= 0) setActiveImage(images.length - 1);
+    else setActiveImage((index: number) => (index -= 1));
+  }, [activeImage, images, setActiveImage]);
+
   return (
     <>
       <Head>
@@ -58,10 +73,7 @@ const Feed = ({ images }: FeedProps) => {
                 key={img.slug}
                 img={img}
                 index={index}
-                toggleModal={() => {
-                  setActiveImage(index);
-                  toggleModal();
-                }}
+                toggleModal={() => updateActiveImage(index)}
               />
             ))}
           </div>
@@ -71,7 +83,8 @@ const Feed = ({ images }: FeedProps) => {
         images={images}
         activeImage={activeImage}
         isModalActive={isModalActive}
-        setActiveImage={setActiveImage}
+        incActiveImage={incActiveImage}
+        decActiveImage={decActiveImage}
         toggleModal={toggleModal}
       />
     </>

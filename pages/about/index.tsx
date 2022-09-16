@@ -29,12 +29,12 @@ const About = () => {
     isExpanded && "visible-in opacity-100 pointer-events-auto delay-[0ms]"
   );
   const modalUiStyles = clsx(
-    "flex justify-end -translate-y-full transition-transform duration-500 delay-0 ease-out-cubic",
-    isExpanded && "-translate-y-0 delay-[300ms]"
+    "-translate-y-full transition-transform duration-500 delay-0 ease-out-cubic",
+    isExpanded && "-translate-y-0 delay-[600ms]"
   );
   const imgStyles = clsx(
     "w-[75vw] h-[75vw] bg-blue-500 scale-110 opacity-0 transform transition-all duration-500 delay-0 ease-out-cubic",
-    isExpanded && "scale-to-100 opacity-100 delay-[300ms]"
+    isExpanded && "scale-to-100 opacity-100 delay-[400ms]"
   );
 
   return (
@@ -46,10 +46,14 @@ const About = () => {
       </Head>
       <div className={modalStyles}>
         <div className={modalUiStyles}>
-          <Container t="xs" b="xs">
+          <Container t="xs" b="xs" className="flex justify-between ">
+            <div className="flex gap-x-2">
+              <button className="w-10 h-10 rounded-full border border-gray-100/20"></button>
+              <button className="w-10 h-10 rounded-full border border-gray-100/20"></button>
+            </div>
             <button
               onClick={() => setIsExpanded(false)}
-              className="w-10 h-10 rounded-full bg-blue-500"
+              className="w-10 h-10 rounded-full border border-gray-100/20"
               aria-expanded={isExpanded}
             ></button>
           </Container>

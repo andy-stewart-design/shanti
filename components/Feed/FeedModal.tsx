@@ -1,14 +1,7 @@
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useRef,
-} from "react";
+import { useEffect, useRef } from "react";
 import NextImage from "next/future/image";
 import Container from "components/global/Container";
 import ArrowButton from "components/global/Buttons/ArrowButton";
-import useDelayedRender from "use-delayed-render";
 import clsx from "clsx";
 import type { ImageMetadata } from "types/feed";
 
@@ -16,7 +9,8 @@ interface ModalProps {
   isModalActive: boolean | undefined;
   images: ImageMetadata[];
   activeImage: number;
-  setActiveImage: Dispatch<SetStateAction<number>>;
+  incActiveImage: () => void;
+  decActiveImage: () => void;
   toggleModal: () => void;
 }
 
@@ -24,39 +18,23 @@ const FeedModal = ({
   images,
   activeImage,
   isModalActive,
-  setActiveImage,
+  incActiveImage,
+  decActiveImage,
   toggleModal,
 }: ModalProps) => {
   const modalContainer = useRef<HTMLDivElement>(null);
 
-  const incActiveImage = useCallback(() => {
-    if (activeImage >= images.length - 1) setActiveImage(0);
-    else setActiveImage((index: number) => (index += 1));
-  }, [activeImage, images, setActiveImage]);
-
-  const decActiveImage = useCallback(() => {
-    if (activeImage <= 0) setActiveImage(images.length - 1);
-    else setActiveImage((index: number) => (index -= 1));
-  }, [activeImage, images, setActiveImage]);
-
-  const { mounted, rendered } = useDelayedRender(isModalActive, {
-    enterDelay: 20,
-    exitDelay: 1000,
-  });
-
   const containerStyle = clsx(
-    "fixed top-0 left-0 flex flex-col w-screen h-screen bg-gray-300/90 dark:bg-black/90 backdrop-blur-sm opacity-0 transition-trop duration-1000 ease-out-expo z-50",
-    rendered && "opacity-100",
-    mounted && !isModalActive && "delay-500"
+    "invisible fixed top-0 left-0 flex flex-col w-screen h-screen bg-gray-300/90 dark:bg-black/90 backdrop-blur-sm opacity-0  transition-visop duration-500 delay-500 ease-out-cubic z-50 pointer-events-none",
+    isModalActive && "visible-in opacity-100 pointer-events-auto delay-[0ms]"
   );
   const imageStyle = clsx(
-    "object-contain p-2 opacity-0 scale-110 transition-trop duration-1000 ease-out-expo delay-500",
-    rendered && "opacity-100 scale-100",
-    mounted && !isModalActive && "delay-[0ms] scale-90"
+    "object-contain p-2 opacity-0 scale-110 transition-trop duration-500 delay-0 ease-out-cubic",
+    isModalActive && "scale-to-100 opacity-100 delay-[400ms]"
   );
 
   useEffect(() => {
-    if (!mounted || !modalContainer.current) return;
+    if (!isModalActive || !modalContainer.current) return;
 
     const modalEl = modalContainer.current;
     const focusableEls: NodeListOf<HTMLElement> =
@@ -101,9 +79,7 @@ const FeedModal = ({
     modalEl.addEventListener("keydown", handleClick);
 
     return () => modalEl.removeEventListener("keydown", handleClick);
-  }, [mounted, toggleModal, incActiveImage, decActiveImage]);
-
-  if (!mounted) return null;
+  }, [isModalActive, toggleModal, incActiveImage, decActiveImage]);
 
   return (
     <div ref={modalContainer} className={containerStyle}>
@@ -138,9 +114,9 @@ const FeedModal = ({
           src={`/img/feed/${images[activeImage].slug}`}
           className={imageStyle}
           fill={true}
-          loading="lazy"
           sizes="100vw, (max-width: 768px) 60vw"
           quality="80"
+          priority={true}
           alt={images[activeImage].alt}
         ></NextImage>
       </div>

@@ -158,10 +158,6 @@ const FeedModal = ({
           </div>
         </div>
       </div>
-      <div className="fixed top-0 left-0 z-50">
-        {isModalActive ? "true" : "false"}
-        {isRendered ? "true" : "false"}
-      </div>
     </>
   );
 };

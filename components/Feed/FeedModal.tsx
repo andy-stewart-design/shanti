@@ -23,19 +23,22 @@ const FeedModal = ({
   decActiveImage,
 }: ModalProps) => {
   const modalContainer = useRef<HTMLDivElement>(null);
-  const [isRendered, setisRendered] = useState(false);
 
-  useEffect(() => {
-    if (isModalActive) {
-      setTimeout(() => {
-        setisRendered(true);
-      }, 500);
-    } else if (!isModalActive) {
-      setTimeout(() => {
-        setisRendered(false);
-      }, 1000);
-    }
-  }, [isModalActive]);
+  console.log("modal rendered");
+
+  // const [isRendered, setisRendered] = useState(false);
+
+  // useEffect(() => {
+  //   if (isModalActive) {
+  //     setTimeout(() => {
+  //       setisRendered(true);
+  //     }, 500);
+  //   } else if (!isModalActive) {
+  //     setTimeout(() => {
+  //       setisRendered(false);
+  //     }, 1000);
+  //   }
+  // }, [isModalActive]);
 
   const containerStyle = clsx(
     "invisible fixed top-0 left-0 flex flex-col w-screen h-screen bg-gray-300/90 dark:bg-black/90 backdrop-blur-sm opacity-0  transition-visop duration-500 delay-500 ease-out-cubic z-50 pointer-events-none",
@@ -43,8 +46,8 @@ const FeedModal = ({
   );
   const imageStyle = clsx(
     "object-contain p-2 opacity-0 scale-110 transition-trop duration-500 delay-0 ease-out-cubic",
-    isModalActive && "scale-to-100 opacity-100 delay-[400ms]",
-    !isModalActive && isRendered && "scale-to-90"
+    isModalActive && "scale-to-100 opacity-100 delay-[400ms]"
+    // !isModalActive && isRendered && "scale-to-90"
   );
 
   useEffect(() => {

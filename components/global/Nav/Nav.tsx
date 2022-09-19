@@ -15,7 +15,7 @@ import NavTrigger from "./NavTrigger";
 
 const Nav = () => {
   const window = useWindowSize();
-  const [scrollObserverRef, { entry }] = useIntersectionObserver({});
+  const [scrollObserverRef, { entry }] = useIntersectionObserver();
 
   const links: NavLinks[] = [
     { href: "/feed", text: "Feed" },

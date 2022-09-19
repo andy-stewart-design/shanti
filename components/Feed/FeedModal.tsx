@@ -24,30 +24,13 @@ const FeedModal = ({
 }: ModalProps) => {
   const modalContainer = useRef<HTMLDivElement>(null);
 
-  console.log("modal rendered");
-
-  // const [isRendered, setisRendered] = useState(false);
-
-  // useEffect(() => {
-  //   if (isModalActive) {
-  //     setTimeout(() => {
-  //       setisRendered(true);
-  //     }, 500);
-  //   } else if (!isModalActive) {
-  //     setTimeout(() => {
-  //       setisRendered(false);
-  //     }, 1000);
-  //   }
-  // }, [isModalActive]);
-
   const containerStyle = clsx(
     "invisible fixed top-0 left-0 flex flex-col w-screen h-screen bg-gray-300/90 dark:bg-black/90 backdrop-blur-sm opacity-0  transition-visop duration-500 delay-500 ease-out-cubic z-50 pointer-events-none",
     isModalActive && "visible-in opacity-100 pointer-events-auto delay-[0ms]"
   );
   const imageStyle = clsx(
-    "object-contain p-2 opacity-0 scale-110 transition-trop duration-500 delay-0 ease-out-cubic",
+    "relative grow pointer-events-none opacity-0 scale-110 transition-trop duration-500 delay-0 ease-out-cubic",
     isModalActive && "scale-to-100 opacity-100 delay-[400ms]"
-    // !isModalActive && isRendered && "scale-to-90"
   );
 
   useEffect(() => {
@@ -127,16 +110,34 @@ const FeedModal = ({
             </button>
           </div>
         </Container>
-        <div className="relative grow pointer-events-none">
-          <NextImage
-            src={`/img/feed/${images[activeImage].slug}`}
-            className={imageStyle}
-            fill={true}
-            sizes="100vw, (max-width: 768px) 60vw"
-            quality="80"
-            priority={true}
-            alt={images[activeImage].alt}
-          ></NextImage>
+        <div className={imageStyle}>
+          {images[activeImage].filetype === "mp4" ? (
+            <video
+              // onClick={controlPlayback}
+              className="absolute top-0 left-0 w-full h-full object-contain p-2"
+              autoPlay
+              muted
+              loop
+              playsInline
+            >
+              <source
+                src={`/img/feed/${images[activeImage].slug}`}
+                type="video/mp4"
+              />
+              Sorry, your browser doesn&apos;t support embedded videos.
+            </video>
+          ) : (
+            <NextImage
+              src={`/img/feed/${images[activeImage].slug}`}
+              // className={imageStyle}
+              className="object-contain p-2"
+              fill={true}
+              sizes="100vw, (max-width: 768px) 60vw"
+              quality="80"
+              priority={true}
+              alt={images[activeImage].alt}
+            ></NextImage>
+          )}
         </div>
         <div className="relative flex justify-center pt-2 p-8">
           <div className="flex gap-x-6 font-medium">

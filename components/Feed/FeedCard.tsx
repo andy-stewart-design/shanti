@@ -1,4 +1,5 @@
 import NextImage from "next/future/image";
+import Video from "components/global/Video";
 import type { ImageMetadata } from "types/feed";
 
 interface CardProps {
@@ -13,16 +14,20 @@ const FeedCard = ({ img, index, toggleModal }: CardProps) => {
       onClick={toggleModal}
       className="group relative bg-black rounded-xl overflow-hidden"
     >
-      <NextImage
-        src={`/img/feed/${img.slug}`}
-        width="1000"
-        height="1000"
-        priority={index === 0 ? true : false}
-        loading={index <= 2 ? "eager" : "lazy"}
-        sizes="100vw, (max-width: 768px) 60vw"
-        quality="80"
-        alt={img.alt}
-      ></NextImage>
+      {img.filetype === "mp4" ? (
+        <Video src={`/img/feed/${img.slug}`} />
+      ) : (
+        <NextImage
+          src={`/img/feed/${img.slug}`}
+          width="1000"
+          height="1000"
+          priority={index === 0 ? true : false}
+          loading={index <= 2 ? "eager" : "lazy"}
+          sizes="100vw, (max-width: 768px) 60vw"
+          quality="80"
+          alt={img.alt}
+        />
+      )}
       <div className="absolute bottom-2 right-2 flex-center w-10 h-10 bg-gray-800/80 opacity-0 backdrop-blur-sm rounded-lg transition-opacity duration-300 ease-out-cubic group-hover:opacity-100 group-focus-visible:opacity-100">
         <svg
           xmlns="http://www.w3.org/2000/svg"

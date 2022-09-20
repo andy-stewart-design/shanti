@@ -15,7 +15,11 @@ const FeedCard = ({ img, index, toggleModal }: CardProps) => {
       className="group relative bg-black rounded-xl overflow-hidden"
     >
       {img.filetype === "mp4" ? (
-        <Video src={`/img/feed/${img.slug}`} />
+        <Video
+          src={`/img/feed/${img.slug}`}
+          className="aspect-square"
+          width="1080"
+        />
       ) : (
         <NextImage
           src={`/img/feed/${img.slug}`}
@@ -28,7 +32,7 @@ const FeedCard = ({ img, index, toggleModal }: CardProps) => {
           alt={img.alt}
         />
       )}
-      <div className="absolute bottom-2 right-2 flex-center w-10 h-10 bg-gray-800/80 opacity-0 backdrop-blur-sm rounded-lg transition-opacity duration-300 ease-out-cubic group-hover:opacity-100 group-focus-visible:opacity-100">
+      <div className="absolute bottom-2 right-2 flex-center w-10 h-10 bg-black/70 opacity-0 backdrop-blur-sm rounded-lg transition-opacity duration-300 ease-out-cubic group-hover:opacity-100 group-focus-visible:opacity-100">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"

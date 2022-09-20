@@ -3,17 +3,23 @@ import useIntersectionObserver from "lib/useIntersectionObserver";
 
 interface VideoProps {
   src: string;
+  className?: string;
+  width?: string;
+  height?: string;
 }
 
-const Video = ({ src }: VideoProps) => {
+const Video = ({
+  src,
+  className = "",
+  width = "1920",
+  height = "1080",
+}: VideoProps) => {
   const [scrollObserverRef, { entry }] = useIntersectionObserver({
     threshold: 0.5,
   });
 
   useEffect(() => {
     if (!entry) return;
-    console.log(entry.target);
-
     const video = entry.target as HTMLVideoElement;
     console.log(entry.target);
     if (entry.isIntersecting) video.play();
@@ -23,12 +29,13 @@ const Video = ({ src }: VideoProps) => {
   return (
     <video
       ref={scrollObserverRef}
+      className={className}
       autoPlay
       muted
       loop
       playsInline
-      width="1080"
-      height="1080"
+      width={width}
+      height={height}
     >
       <source src={src} type="video/mp4" />
       Sorry, your browser doesn&apos;t support embedded videos.

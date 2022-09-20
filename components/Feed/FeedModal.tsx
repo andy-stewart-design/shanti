@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import NextImage from "next/future/image";
 import Container from "components/global/Container";
+import Video from "components/global/Video";
 import ArrowButton from "components/global/Buttons/ArrowButton";
 import clsx from "clsx";
 import type { ImageMetadata } from "types/feed";
@@ -84,7 +85,7 @@ const FeedModal = ({
   return (
     <>
       <div ref={modalContainer} className={containerStyle}>
-        <Container className="relative flex" t="xs" b="xs">
+        <Container className="relative flex z-10" t="xs" b="xs">
           <div className="relative flex justify-start items-start gap-x-2 grow md:absolute md:top-0 md:left-0 md:w-full md:h-screen md:justify-between md:items-center md:p-4 lg:px-8">
             <ArrowButton d="l" callback={decActiveImage}></ArrowButton>
             <ArrowButton d="r" callback={incActiveImage}></ArrowButton>
@@ -112,20 +113,11 @@ const FeedModal = ({
         </Container>
         <div className={imageStyle}>
           {images[activeImage].filetype === "mp4" ? (
-            <video
-              // onClick={controlPlayback}
+            <Video
+              src={`/img/feed/${images[activeImage].slug}`}
               className="absolute top-0 left-0 w-full h-full object-contain p-2"
-              autoPlay
-              muted
-              loop
-              playsInline
-            >
-              <source
-                src={`/img/feed/${images[activeImage].slug}`}
-                type="video/mp4"
-              />
-              Sorry, your browser doesn&apos;t support embedded videos.
-            </video>
+              width="1080"
+            />
           ) : (
             <NextImage
               src={`/img/feed/${images[activeImage].slug}`}

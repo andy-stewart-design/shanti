@@ -26,8 +26,20 @@
     @apply delay-0;
   }
 
+  .delay-to-0 {
+    @apply delay-0;
+  }
+
+  .delay-to-400 {
+    @apply delay-400;
+  }
+
   .flex-center {
     @apply flex justify-center items-center;
+  }
+
+  .opacity-to-100 {
+    @apply opacity-100;
   }
 
   .scale-to-90 {

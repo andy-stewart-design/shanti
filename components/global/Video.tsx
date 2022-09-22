@@ -18,10 +18,11 @@ const Video = ({
     threshold: 0.5,
   });
 
+  // console.log("video rendered");
+
   useEffect(() => {
     if (!entry) return;
     const video = entry.target as HTMLVideoElement;
-    console.log(entry.target);
     if (entry.isIntersecting) video.play();
     else video.pause();
   }, [entry]);

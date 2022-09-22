@@ -1,7 +1,16 @@
 import clsx from "clsx";
 import type { NavTriggerProps } from "types/nav";
 
-const NavTrigger = ({ isMenuActive, callback }: NavTriggerProps) => {
+const NavTrigger = ({
+  isMenuActive,
+  callback,
+  disabled = false,
+  className = "",
+}: NavTriggerProps) => {
+  const buttonStyles = clsx(
+    "w-10 h-10 bg-gray-200 bg-opacity-0 dark:bg-gray-800 dark:bg-opacity-0 rounded-lg flex items-center justify-center hover:bg-opacity-100 hover:dark:bg-opacity-100 hover:ring-2 ring-gray-300 dark:ring-gray-600 transition-all",
+    className
+  );
   const sharedStyles =
     "transform scale-25 opacity-0 origin-center transition-all duration-700 ease-out-expo";
   const burger = clsx(sharedStyles, !isMenuActive && "opacity-100 scale-[1]");
@@ -10,8 +19,9 @@ const NavTrigger = ({ isMenuActive, callback }: NavTriggerProps) => {
     <button
       aria-label="Open Nav Menu"
       type="button"
-      className="w-10 h-10 bg-gray-200 bg-opacity-0 dark:bg-gray-800 dark:bg-opacity-0 rounded-lg flex items-center justify-center hover:bg-opacity-100 hover:dark:bg-opacity-100 hover:ring-2 ring-gray-300 dark:ring-gray-600 transition-all"
+      className={buttonStyles}
       onClick={callback}
+      disabled={disabled}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

@@ -38,6 +38,8 @@ function useIntersectionObserver({
     const node = nodeRef.current;
     if (node) {
       const root = rootRef.current;
+      const rootMargin = "0px";
+      const threshold = [0];
       const options = { root, rootMargin, threshold };
 
       const observer = new IntersectionObserver(([newEntry]) => {
@@ -46,7 +48,7 @@ function useIntersectionObserver({
       observer.observe(node);
       observerRef.current = observer;
     }
-  }, [rootMargin, threshold]);
+  }, []);
 
   const unobserve = useCallback(() => {
     const currentObserver = observerRef.current;

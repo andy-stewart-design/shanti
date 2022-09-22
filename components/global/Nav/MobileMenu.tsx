@@ -2,13 +2,11 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import clsx from "clsx";
-import useDelayedRender from "use-delayed-render";
 import NavTrigger from "components/global/Nav/NavTrigger";
 import ThemeSwitch from "components/global/Nav/ThemeSwitch";
 import type { MobileMenuProps, MobileMenuOverlayProps } from "types/nav";
-import styles from "./Nav.module.css";
 
-const MobileMenu = ({ links }: MobileMenuProps) => {
+const MobileMenu = ({ links, hasScrolled }: MobileMenuProps) => {
   const navContainer = useRef<HTMLDivElement>(null);
   const [isMenuActive, setIsMenuActive] = useState(false);
   const router = useRouter();
@@ -23,10 +21,10 @@ const MobileMenu = ({ links }: MobileMenuProps) => {
     }
   }, [isMenuActive]);
 
-  const { mounted, rendered } = useDelayedRender(isMenuActive, {
-    enterDelay: 20,
-    exitDelay: 500,
-  });
+  const scrollMenuStyles = clsx(
+    "invisible fixed top-[13px] right-[5px] flex py-0.5 px-1 z-10 bg-black/80 border border-gray-100/20 rounded-full backdrop-blur-sm -mt-18 transition-transform duration-500 ease-out-cubic sm:right-[11px] lg:right-[27px]",
+    hasScrolled && "visible-in translate-y-18"
+  );
 
   useEffect(() => {
     setIsMenuActive(false);
@@ -34,11 +32,12 @@ const MobileMenu = ({ links }: MobileMenuProps) => {
   }, [router.pathname]);
 
   useEffect(() => {
-    if (!mounted || !navContainer.current) return;
+    if (!isMenuActive || !navContainer.current) return;
 
     const navEl = navContainer.current;
-    const focusableEls: NodeListOf<HTMLElement> =
-      navEl.querySelectorAll("a, button");
+    const focusableEls: NodeListOf<HTMLElement> = navEl.querySelectorAll(
+      "a:not(.hidden), button:not([disabled])"
+    );
     let firstFocusableEl: HTMLElement, lastFocusableEl: HTMLElement;
 
     if (focusableEls) {
@@ -56,50 +55,62 @@ const MobileMenu = ({ links }: MobileMenuProps) => {
         }
       } else if (e.key === "Escape") {
         toggleMenu();
-      } else {
-        if (document.activeElement === lastFocusableEl) {
-          e.preventDefault();
-          firstFocusableEl.focus();
-        }
+      } else if (document.activeElement === lastFocusableEl) {
+        e.preventDefault();
+        firstFocusableEl.focus();
       }
     };
 
     navEl.addEventListener("keydown", handleClick);
 
     return () => navEl.removeEventListener("keydown", handleClick);
-  }, [mounted, toggleMenu]);
+  }, [isMenuActive, toggleMenu]);
 
   return (
     <div ref={navContainer} className="flex justify-end grow">
-      <MobileMenuOverlay
-        links={links}
-        isMenuMounted={mounted}
-        isMenuRendered={rendered}
-      />
-      <div className="flex gap-2 z-10">
-        <ThemeSwitch />
-        <NavTrigger isMenuActive={isMenuActive} callback={toggleMenu} />
+      <div className="relative hidden md:flex justify-center items-center gap-6 grow h-full bg-transparent">
+        {links.map((link) => (
+          <Link
+            href={link.href}
+            key={link.text}
+            className="font-medium hidden md:block"
+          >
+            {link.text}
+          </Link>
+        ))}
+      </div>
+      <MenuOverlay links={links} isMenuActive={isMenuActive} />
+      <div className="flex z-10">
+        <ThemeSwitch disabled={hasScrolled} />
+        <NavTrigger
+          isMenuActive={isMenuActive}
+          callback={toggleMenu}
+          className="md:hidden"
+          disabled={hasScrolled}
+        />
+      </div>
+      <div className={scrollMenuStyles}>
+        <ThemeSwitch disabled={!hasScrolled} />
+        <NavTrigger
+          isMenuActive={isMenuActive}
+          callback={toggleMenu}
+          disabled={!hasScrolled}
+        />
       </div>
     </div>
   );
 };
 
-const MobileMenuOverlay = ({
-  isMenuMounted,
-  isMenuRendered,
-  links,
-}: MobileMenuOverlayProps) => {
+const MenuOverlay = ({ isMenuActive, links }: MobileMenuOverlayProps) => {
   const containerStyle = clsx(
-    "fixed top-0 left-0 flex-center flex-col gap-y-6 w-screen h-screen bg-gray-300/90 dark:bg-gray-800/90 backdrop-blur-sm opacity-0 transition-opacity duration-500 ease-out",
-    isMenuRendered && "opacity-100"
+    "invisible fixed top-0 left-0 flex-center flex-col gap-y-6 w-screen h-screen bg-gray-300/90 dark:bg-black/80 backdrop-blur opacity-0 transition-visop duration-500 delay-200 ease-out-cubic pointer-events-none",
+    isMenuActive && "visible-in opacity-to-100 pointer-events-auto delay-to-0"
   );
 
   const linkStyle = clsx(
     "font-medium text-2xl translate-y-full transition-transform duration-500 ease-in-out-cubic",
-    isMenuRendered && styles.menuItemActive
+    isMenuActive && "translate-y-[0px]"
   );
-
-  if (!isMenuMounted) return null;
 
   return (
     <div className={containerStyle}>
@@ -108,9 +119,7 @@ const MobileMenuOverlay = ({
           <span
             className={linkStyle}
             style={{
-              transitionDelay: isMenuRendered
-                ? `${(index + 1) * 100}ms`
-                : "1000ms",
+              transitionDelay: isMenuActive ? `${(index + 1) * 100}ms` : "0ms",
             }}
           >
             {link.text}

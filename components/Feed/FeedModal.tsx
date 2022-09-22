@@ -27,11 +27,11 @@ const FeedModal = ({
 
   const containerStyle = clsx(
     "invisible fixed top-0 left-0 flex flex-col w-screen h-screen bg-gray-300/90 dark:bg-black/90 backdrop-blur-sm opacity-0  transition-visop duration-500 delay-500 ease-out-cubic z-50 pointer-events-none",
-    isModalActive && "visible-in opacity-100 pointer-events-auto delay-[0ms]"
+    isModalActive && "visible-in opacity-to-100 pointer-events-auto delay-to-0"
   );
   const imageStyle = clsx(
     "relative grow pointer-events-none opacity-0 scale-110 transition-trop duration-500 delay-0 ease-out-cubic",
-    isModalActive && "scale-to-100 opacity-100 delay-[400ms]"
+    isModalActive && "scale-to-100 opacity-to-100 delay-to-400"
   );
 
   useEffect(() => {
@@ -121,12 +121,10 @@ const FeedModal = ({
           ) : (
             <NextImage
               src={`/img/feed/${images[activeImage].slug}`}
-              // className={imageStyle}
               className="object-contain p-2"
               fill={true}
               sizes="100vw, (max-width: 768px) 60vw"
               quality="80"
-              priority={true}
               alt={images[activeImage].alt}
             ></NextImage>
           )}

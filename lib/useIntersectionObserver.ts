@@ -38,8 +38,6 @@ function useIntersectionObserver({
     const node = nodeRef.current;
     if (node) {
       const root = rootRef.current;
-      const rootMargin = "0px";
-      const threshold = [0];
       const options = { root, rootMargin, threshold };
 
       const observer = new IntersectionObserver(([newEntry]) => {
@@ -48,7 +46,8 @@ function useIntersectionObserver({
       observer.observe(node);
       observerRef.current = observer;
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rootMargin, Array.isArray(threshold) ? threshold.toString() : threshold]);
 
   const unobserve = useCallback(() => {
     const currentObserver = observerRef.current;

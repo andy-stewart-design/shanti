@@ -97,11 +97,11 @@ export const getStaticProps = async () => {
 
   const filteredImageFiles = filterByFileType(imageFiles);
 
-  return { props: { images: getImageInfo(filteredImageFiles) } };
+  return { props: { images: getMediaData(filteredImageFiles) } };
 };
 
-const getImageInfo = (array: string[]) => {
-  const imageData = array.map((slug) => {
+const getMediaData = (array: string[]) => {
+  const mediaData = array.map((slug) => {
     const projectInfo = slug.replace(/\..*$/, "").split("_"); //regex removes everything after .
     const metaArray = projectInfo.map((info, index) => {
       const metaTags = ["project", "client", "date"];
@@ -119,10 +119,10 @@ const getImageInfo = (array: string[]) => {
     return { slug, filetype, ...metadata, year, alt };
   });
 
-  const imageDataSorted = imageData.sort(function (a, b) {
+  const mediaDataSorted = mediaData.sort(function (a, b) {
     return Date.parse(b.date) - Date.parse(a.date);
   });
-  return imageDataSorted;
+  return mediaDataSorted;
 };
 
 const filterByFileType = (files: string[]) => {

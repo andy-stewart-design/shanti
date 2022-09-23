@@ -4,12 +4,17 @@ import { useRouter } from "next/router";
 import clsx from "clsx";
 import NavTrigger from "components/global/Nav/NavTrigger";
 import ThemeSwitch from "components/global/Nav/ThemeSwitch";
-import type { MobileMenuProps, MobileMenuOverlayProps } from "types/nav";
+import MenuOverlay from "components/global/Nav/MenuOverlay";
+import type { MobileMenuProps } from "types/nav";
 
-const MobileMenu = ({ links, hasScrolled }: MobileMenuProps) => {
+const LinksContainer = ({ links, hasScrolled }: MobileMenuProps) => {
+  const router = useRouter();
   const navContainer = useRef<HTMLDivElement>(null);
   const [isMenuActive, setIsMenuActive] = useState(false);
-  const router = useRouter();
+  const scrollMenuStyles = clsx(
+    "invisible fixed top-[13px] right-[5px] flex py-0.5 px-1 z-10 bg-black/80 border border-gray-100/20 rounded-full backdrop-blur-sm -mt-18 transition-transform duration-500 ease-out-cubic sm:right-[11px] lg:right-[27px]",
+    hasScrolled && "visible-in translate-y-18"
+  );
 
   const toggleMenu = useCallback(() => {
     if (isMenuActive) {
@@ -20,11 +25,6 @@ const MobileMenu = ({ links, hasScrolled }: MobileMenuProps) => {
       document.body.style.overflow = "hidden";
     }
   }, [isMenuActive]);
-
-  const scrollMenuStyles = clsx(
-    "invisible fixed top-[13px] right-[5px] flex py-0.5 px-1 z-10 bg-black/80 border border-gray-100/20 rounded-full backdrop-blur-sm -mt-18 transition-transform duration-500 ease-out-cubic sm:right-[11px] lg:right-[27px]",
-    hasScrolled && "visible-in translate-y-18"
-  );
 
   useEffect(() => {
     setIsMenuActive(false);
@@ -101,33 +101,4 @@ const MobileMenu = ({ links, hasScrolled }: MobileMenuProps) => {
   );
 };
 
-const MenuOverlay = ({ isMenuActive, links }: MobileMenuOverlayProps) => {
-  const containerStyle = clsx(
-    "invisible fixed top-0 left-0 flex-center flex-col gap-y-6 w-screen h-screen bg-gray-300/90 dark:bg-black/80 backdrop-blur opacity-0 transition-visop duration-500 delay-200 ease-out-cubic pointer-events-none",
-    isMenuActive && "visible-in opacity-to-100 pointer-events-auto delay-to-0"
-  );
-
-  const linkStyle = clsx(
-    "font-medium text-2xl translate-y-full transition-transform duration-500 ease-in-out-cubic",
-    isMenuActive && "translate-y-[0px]"
-  );
-
-  return (
-    <div className={containerStyle}>
-      {links.map((link, index) => (
-        <Link key={link.text} href={link.href} className="flex overflow-hidden">
-          <span
-            className={linkStyle}
-            style={{
-              transitionDelay: isMenuActive ? `${(index + 1) * 100}ms` : "0ms",
-            }}
-          >
-            {link.text}
-          </span>
-        </Link>
-      ))}
-    </div>
-  );
-};
-
-export default MobileMenu;
+export default LinksContainer;

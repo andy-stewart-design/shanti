@@ -25,8 +25,8 @@ const FeedCard = ({ img, index, toggleModal }: CardProps) => {
           src={`/img/feed/${img.slug}`}
           width="1000"
           height="1000"
-          priority={index === 0 ? true : false}
-          loading={index <= 2 ? "eager" : "lazy"}
+          priority={index <= 3 ? true : false}
+          loading={index <= 3 ? "eager" : "lazy"}
           sizes="100vw, (max-width: 768px) 60vw"
           quality="80"
           alt={img.alt}

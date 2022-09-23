@@ -5,13 +5,12 @@
 
 import Container from "components/global/Container";
 import AndyLogo from "components/global/Nav/AndyLogo";
-import MobileMenu from "components/global/Nav/MobileMenu";
+import LinksContainer from "components/global/Nav/LinksContainer";
 import type { NavLinks } from "types/nav";
 import useIntersectionObserver from "lib/useIntersectionObserver";
 
 const Nav = () => {
   const [scrollObserverRef, { entry }] = useIntersectionObserver();
-  console.log("nav rendered");
 
   const links: NavLinks[] = [
     { href: "/feed", text: "Feed" },
@@ -29,7 +28,7 @@ const Nav = () => {
         <Container t="xs" b="xs">
           <div className="flex w-full">
             <AndyLogo />
-            <MobileMenu
+            <LinksContainer
               links={links}
               hasScrolled={
                 entry?.intersectionRatio! <= 0 && !entry?.isIntersecting
